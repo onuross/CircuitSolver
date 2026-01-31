@@ -66,7 +66,17 @@ R2           2      0      200.0  # 200 Ohm
 ## 🧪 Test Case (Validation)
 
 Based on **HTW Dresden** coursework standards:
-* **Nodes:** 3 Unknowns ($\phi_1, \phi_2, \phi)
+* **Nodes:** 3 Unknowns ($\phi_1, \phi_2, \phi_3$) + 1 Reference Node (GND).
+* **Sources:** $U_{q1} = 10V$, $U_{q2} = -5V$, $U_{q3} = 5V$.
+* **Resistors:** Mixed $1\Omega$ and $2\Omega$ values.
+* **Expected Output:** The program should output the exact node potentials $[\phi_1, \phi_2, \phi_3]$ and allow calculation of any branch current.
+
+---
+
+## 🚀 Future Improvements
+- [ ] AC Circuit Support (Complex Numbers / Impedance).
+- [ ] Visualization of the circuit graph.
+- [ ] Graphical User Interface (GUI).
 
 ---
 *Author: onuross*
