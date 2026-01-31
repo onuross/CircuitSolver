@@ -1,100 +1,48 @@
-# CIRCUITSOLVER: AUTOMATED NODE VOLTAGE ANALYSIS ENGINE
+# ⚡ CircuitSolver
+**Automated Node Voltage Analysis Engine**
 
-![Status](https://img.shields.io/badge/status-planned%20%2F%20in%20progress-yellow)
-![Domain](https://img.shields.io/badge/domain-electrical%20engineering-blue)
-![Domain](https://img.shields.io/badge/domain-systems%20programming-blue)
+![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
+![Domain](https://img.shields.io/badge/Domain-Electrical%20Engineering%20%7C%20Systems%20Programming-blue)
 
-CircuitSolver is a software engine designed to parse, model, and solve electrical DC circuits. Unlike a simple calculator, this engine "understands" circuit topology and automatically constructs the conductance matrix using **Node Voltage Analysis** (Knotenpotenzialverfahren).
+**CircuitSolver** is a software engine that automatically analyzes and solves **DC electrical circuits** using  
+**Node Voltage Analysis (Knotenpotenzialverfahren)**.
 
-This project bridges the gap between **Computer Science** (Graph Theory, Parsing, Memory Management) and **Electrical Engineering** (Circuit Laws, Matrix Algebra).
+Unlike simple calculators, this project understands **circuit topology**, parses a netlist, constructs the
+conductance matrix, and solves the resulting linear system.
+
+This project intentionally bridges:
+
+- **Electrical Engineering** (KCL, circuit laws, matrix equations)
+- **Computer Science** (parsing, data structures, memory management, numerical methods)
 
 ---
 
-## PROJECT OBJECTIVE
+## 🎯 Project Goal
 
-The goal is to automate the mathematical transformation:
+Automatically transform a circuit description into the mathematical system:
 
-```
-[G] * [phi] = [Iq]
-```
+\[
+[G] \cdot [\phi] = [I_q]
+\]
 
 Where:
-- **[G]**: The Conductance Matrix (Leitwertmatrix)
-- **[phi]**: The Node Potential Vector (Unknowns)
-- **[Iq]**: The Source Current Vector
+
+- **\( [G] \)** — Conductance matrix (Leitwertmatrix)
+- **\( [\phi] \)** — Node potential vector (unknowns)
+- **\( [I_q] \)** — Source current vector
+
+The solver computes all node voltages and allows derivation of branch currents and voltage drops.
 
 ---
 
-## FUNCTIONAL REQUIREMENTS
+## 🧩 Core Features
 
-### 1. Circuit Parser (Detection Phase)
+### 1. Circuit Parsing
+Reads a text-based **netlist** describing components and connections.
 
-The program reads a **Netlist file** (text-based) defining connections. It does not ask for matrix coefficients directly.
-
-**Example Input** (`circuit.txt`):
-```
-V1   1   0   10.0   (10V Source)
-R1   1   2   100.0  (100 Ohm)
-R2   2   0   200.0  (200 Ohm)
-```
-
-### 2. Matrix Assembly (MNA Algorithm)
-
-- Iterates through the component list
-- Stamps values into the system matrix **[G]** and vector **[Iq]**
-- Converts Resistors (R) to Conductance (G = 1/R)
-- Applies Kirchhoff's Current Law (KCL)
-
-### 3. The Solver
-
-- Solves the linear equation system to find node potentials **[phi]**
-- Computes branch currents and voltages
-
----
-
-## IMPLEMENTATION ROADMAP
-
-### Phase 1: Python Prototype (Proof of Concept)
-
-- **Goal**: Validate logic using high-level abstractions
-- **Tools**: Python 3, NumPy
-- **Task**: Parse text file → Solve using `numpy.linalg.solve`
-
-### Phase 2: C Implementation (Hardcore Mode)
-
-- **Goal**: High-performance, low-level implementation (No external math libraries)
-- **Tools**: C (C99/C11), Make, Valgrind
-- **Key Challenges**:
-  - Dynamic memory allocation (`malloc`, `free`) for matrices
-  - Custom Gaussian Elimination / LU Decomposition
-  - Linked Lists for component storage
-
----
-
-## TEST CASE (VALIDATION)
-
-Based on HTW Dresden coursework standards:
-
-- **Nodes**: 3 Unknowns (phi1, phi2, phi3) + GND
-- **Sources**: Uq1 = 10V, Uq2 = -5V, Uq3 = 5V
-- **Resistors**: Mixed 1 Ohm and 2 Ohm values
-
----
-
-## FUTURE IMPROVEMENTS
-
-- AC Circuit Support (Complex Numbers)
-- Graph Visualization
-- Graphical User Interface (GUI)
-
----
-
-## Author
-
-**onuross**
-
----
-
-## License
-
-*[Add your license information here]*
+**Example (`circuit.txt`):**
+```text
+# Component  NodeA  NodeB  Value
+V1           1      0      10.0   # 10V source
+R1           1      2      100.0  # 100 Ohm
+R2           2      0      200.0  # 200 Ohm
