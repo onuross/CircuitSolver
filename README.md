@@ -66,7 +66,7 @@ R2           2      0      200.0  # 200 Ohm
 ## 🧪 Test Case (Validation)
 
 Based on **HTW Dresden** coursework standards:
-* **Nodes:** 3 Unknowns ($\phi_1, \phi_2, \phi
+* **Nodes:** 3 Unknowns ($\phi_1, \phi_2, \phi)
 
 ---
 *Author: onuross*
