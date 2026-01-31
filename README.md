@@ -1,48 +1,72 @@
-# ⚡ CircuitSolver
-**Automated Node Voltage Analysis Engine**
+# CircuitSolver: Automated Node Voltage Analysis Engine ⚡️
 
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
+![Status](https://img.shields.io/badge/Status-Planned%20%2F%20In%20Progress-yellow)
 ![Domain](https://img.shields.io/badge/Domain-Electrical%20Engineering%20%7C%20Systems%20Programming-blue)
 
-**CircuitSolver** is a software engine that automatically analyzes and solves **DC electrical circuits** using  
-**Node Voltage Analysis (Knotenpotenzialverfahren)**.
+**CircuitSolver** is a software engine designed to parse, model, and solve electrical DC circuits. Unlike a simple calculator, this engine "understands" circuit topology and automatically constructs the conductance matrix using **Node Voltage Analysis** (Knotenpotenzialverfahren).
 
-Unlike simple calculators, this project understands **circuit topology**, parses a netlist, constructs the
-conductance matrix, and solves the resulting linear system.
-
-This project intentionally bridges:
-
-- **Electrical Engineering** (KCL, circuit laws, matrix equations)
-- **Computer Science** (parsing, data structures, memory management, numerical methods)
+This project bridges the gap between **Computer Science** (Graph Theory, Parsing, Memory Management) and **Electrical Engineering** (Circuit Laws, Matrix Algebra).
 
 ---
 
-## 🎯 Project Goal
+## 🎯 Project Objective
 
-Automatically transform a circuit description into the mathematical system:
+The goal is to automate the mathematical transformation:
 
-\[
-[G] \cdot [\phi] = [I_q]
-\]
+$$[G] \cdot [\phi] = [I_q]$$
 
 Where:
-
-- **\( [G] \)** — Conductance matrix (Leitwertmatrix)
-- **\( [\phi] \)** — Node potential vector (unknowns)
-- **\( [I_q] \)** — Source current vector
-
-The solver computes all node voltages and allows derivation of branch currents and voltage drops.
+* **$[G]$**: The Conductance Matrix (Leitwertmatrix)
+* **$[\phi]$**: The Node Potential Vector (Unknowns)
+* **$[I_q]$**: The Source Current Vector
 
 ---
 
-## 🧩 Core Features
+## 📝 Functional Requirements
 
-### 1. Circuit Parsing
-Reads a text-based **netlist** describing components and connections.
+### 1. Circuit Parser (Detection Phase)
+Reads a Netlist file (text-based) defining connections.
 
-**Example (`circuit.txt`):**
+**Example Input (`circuit.txt`):**
 ```text
 # Component  NodeA  NodeB  Value
-V1           1      0      10.0   # 10V source
+V1           1      0      10.0   # 10V Source
 R1           1      2      100.0  # 100 Ohm
 R2           2      0      200.0  # 200 Ohm
+```
+
+### 2. Matrix Assembly (MNA Algorithm)
+* Iterates through the parsed list of components and "stamp" their values into the system matrix $[G]$ and vector $[I_q]$.
+* Converts Resistors ($R$) to Conductance ($G = 1/R$).
+* Applies **Kirchhoff's Current Law (KCL)**.
+
+### 3. The Solver
+* Solves the linear equation system to find $[\phi]$.
+* Computes branch currents and voltages.
+
+---
+
+## 🛠️ Implementation Roadmap
+
+### Phase 1: Python Prototype (Proof of Concept) 🐍
+* **Goal:** Validate logic using high-level abstractions.
+* **Tools:** Python 3, NumPy.
+* **Task:** Parse text file -> Solve using `numpy.linalg.solve`.
+
+### Phase 2: C Implementation (Hardcore Mode) ⚙️
+* **Goal:** High-performance, low-level implementation (No external math libraries).
+* **Tools:** C (C99/C11), Make, Valgrind.
+* **Key Challenges:**
+    * Dynamic memory allocation (`malloc`, `free`) for matrices.
+    * Custom Gaussian Elimination / LU Decomposition.
+    * Linked Lists for component storage.
+
+---
+
+## 🧪 Test Case (Validation)
+
+Based on **HTW Dresden** coursework standards:
+* **Nodes:** 3 Unknowns ($\phi_1, \phi_2, \phi
+
+---
+*Author: onuross*
